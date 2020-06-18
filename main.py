@@ -13,10 +13,15 @@ class Blackboard():
     def __init__(self, html):
         self.html = html
 
-    def classin(self):
-        classin_re = re.compile(r'https://www\.eeo\.cn/live\.php\?lessonKey=[0-9a-zA-Z]+')
+    def links(self):
+        classin_re = re.compile(r'https\:\/\/www\.eeo\.cn\/live\.php\?lessonKey\=[0-9a-zA-Z]+')
         links = classin_re.findall(self.html)
         return links
+
+    def lessonkeys(self):
+        classin_re = re.compile(r'(?<=https:\/\/www\.eeo\.cn\/live\.php\?lessonKey\=)[0-9a-zA-Z]+')
+        keys = classin_re.findall(self.html)
+        return keys
 
 class Classin():
     def __init__(self, lessonkey):
@@ -70,9 +75,17 @@ class Classin():
 
     def videolist(self):
         data = self._webcastdata()
-        return data['data']['lessonData']['vodList']
+        vlist = data['data']['lessonData']['vodList']
+        result = []
+        for i in sorted(vlist):
+            result.append(vlist[i])
+        return result
 
     
 if __name__ == "__main__":
-    c = Classin('6cf034395ded55e4')
-    print(c.videolist())
+    # c = Classin('6cf034395ded55e4')
+    # print(c.videolist())
+    with open('a.html', 'r', encoding='utf-8') as f:
+        text = f.read()
+    b = Blackboard(text)
+    print(b.lessonkeys())
