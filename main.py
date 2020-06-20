@@ -3,6 +3,7 @@ import re
 import json
 import time
 
+import click
 import requests
 
 # 爬虫请求头
@@ -103,8 +104,11 @@ class Classin():
         }
         return obj
 
-if __name__ == "__main__":
-    html_path = "a.html"
+@click.group()
+def cli():
+    pass
+
+def get_bb_videos(html_path):
     with open(html_path, 'r', encoding='utf-8') as f:
         bb_html = f.read()
     b = Blackboard(bb_html)
@@ -123,6 +127,16 @@ if __name__ == "__main__":
             for chunk in r.iter_content(chunk_size=512):
                 if chunk:
                     f.write(chunk)
-        
 
-            
+@cli.command()
+@click.argument('path')
+def bb(path):
+    get_bb_videos(path)
+
+@cli.command()
+@click.argument('path')
+def txt(path):
+    get_bb_videos(path)
+
+if __name__ == "__main__":
+    cli()
