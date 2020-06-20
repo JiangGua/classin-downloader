@@ -108,25 +108,28 @@ class Classin():
 def cli():
     pass
 
+def get_classin_video(lessonkey):
+    c = Classin(lessonkey)
+    path = os.path.join(c.course_name(), c.teacher(), c.md())
+    if not os.path.exists(path):
+        os.makedirs(path)
+    
+    vlist = c.videolist()
+    for i, v in enumerate(vlist):
+        r = requests.get(v, stream=True)
+        vfile = os.path.join(path, '{}.mp4'.format(i))
+        f = open(vfile, "wb")
+        for chunk in r.iter_content(chunk_size=512):
+            if chunk:
+                f.write(chunk)
+
 def get_bb_videos(html_path):
     with open(html_path, 'r', encoding='utf-8') as f:
         bb_html = f.read()
     b = Blackboard(bb_html)
     lessonkeys = b.lessonkeys()
     for key in lessonkeys:
-        c = Classin(key)
-        path = os.path.join(c.course_name(), c.teacher(), c.md())
-        if not os.path.exists(path):
-            os.makedirs(path)
-        
-        vlist = c.videolist()
-        for i, v in enumerate(vlist):
-            r = requests.get(v, stream=True)
-            vfile = os.path.join(path, '{}.mp4'.format(i))
-            f = open(vfile, "wb")
-            for chunk in r.iter_content(chunk_size=512):
-                if chunk:
-                    f.write(chunk)
+        get_classin_video(key)
 
 @cli.command()
 @click.argument('path')
@@ -137,6 +140,17 @@ def bb(path):
 @click.argument('path')
 def txt(path):
     get_bb_videos(path)
+
+@cli.command()
+@click.argument('url')
+def classin(url):
+    classin_re = re.compile(r'(?<=https:\/\/www\.eeo\.cn\/live\.php\?lessonKey\=)[0-9a-zA-Z]+')
+    keys = classin_re.findall(url)
+    if not keys:
+        key = url
+    else:
+        key = keys[0]
+    get_classin_video(key)
 
 if __name__ == "__main__":
     cli()
