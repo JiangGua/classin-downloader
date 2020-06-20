@@ -1,5 +1,8 @@
+import os
 import re
 import json
+import time
+
 import requests
 
 # 爬虫请求头
@@ -81,11 +84,45 @@ class Classin():
             result.append(vlist[i])
         return result
 
-    
+    def _md(self, timestamp):
+        local_time = time.localtime(int(timestamp))
+        md = time.strftime("%m%d", local_time)
+        return md
+
+    def md(self):
+        return self._md(self.start_timestamp())
+
+    def info(self):
+        obj = {
+            'course_name': self.course_name(),
+            'teacher': self.teacher(),
+            'videolist': self.videolist(),
+            'start_timestamp': self.start_timestamp(),
+            'end_timestamp': self.end_timestamp(),
+            'md': self.md()
+        }
+        return obj
+
 if __name__ == "__main__":
-    # c = Classin('6cf034395ded55e4')
-    # print(c.videolist())
-    with open('a.html', 'r', encoding='utf-8') as f:
-        text = f.read()
-    b = Blackboard(text)
-    print(b.lessonkeys())
+    html_path = "a.html"
+    with open(html_path, 'r', encoding='utf-8') as f:
+        bb_html = f.read()
+    b = Blackboard(bb_html)
+    lessonkeys = b.lessonkeys()
+    for key in lessonkeys:
+        c = Classin(key)
+        path = os.path.join(c.course_name(), c.teacher(), c.md())
+        if not os.path.exists(path):
+            os.makedirs(path)
+        
+        vlist = c.videolist()
+        for i, v in enumerate(vlist):
+            r = requests.get(v, stream=True)
+            vfile = os.path.join(path, '{}.mp4'.format(i))
+            f = open(vfile, "wb")
+            for chunk in r.iter_content(chunk_size=512):
+                if chunk:
+                    f.write(chunk)
+        
+
+            
