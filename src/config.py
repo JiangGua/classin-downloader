@@ -1,0 +1,1 @@
+TEMP_FOLDER = "download_cache"  # 下载缓存文件夹

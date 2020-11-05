@@ -7,6 +7,7 @@ import time
 import requests
 
 import downloader
+from config import TEMP_FOLDER
 
 # 爬虫请求头
 headers = {
@@ -143,6 +144,8 @@ def download_all_videos_from_bb_txt():
     input('即将打开文本编辑器. 按回车键继续...')
     os.startfile(temp_file_path)
     input('请将「ClassIn 在线研讨室 - 全部显示」页面的源代码复制粘贴到其中, 保存退出后按回车键开始下载...')
+    if not os.path.exists(TEMP_FOLDER):
+        os.mkdir(TEMP_FOLDER)
     get_bb_videos(temp_file_path)
     os.remove(temp_file_path)    
 

@@ -2,14 +2,11 @@ import os
 import time
 import shutil
 import threading
-from tempfile import TemporaryDirectory
 
 import requests
 import retry
 
-TEMP_FOLDER = "download_cache"  # 临时文件夹
-if not os.path.exists(TEMP_FOLDER):
-    os.mkdir(TEMP_FOLDER)
+from config import TEMP_FOLDER
 
 # 多线程下载
 # 来自 https://www.cnblogs.com/weiyinfu/p/8126063.html
@@ -82,8 +79,10 @@ def multithread_download(url, path, debug=False):
             thread.join()
 
     start_threading()
-    shutil.rmtree(TEMP_FOLDER)
+    
 
 if __name__ == "__main__":
+    if not os.path.exists(TEMP_FOLDER):
+        os.mkdir(TEMP_FOLDER)
     multithread_download('https://csdnimg.cn/public/common/toolbar/images/csdnqr@2x.png', '下载/a.png', debug=True)
-    # shutil.rmtree(TEMP_FOLDER)
+    shutil.rmtree(TEMP_FOLDER)
