@@ -4,25 +4,34 @@
 
 
 
-## 使用
+## 使用方法
 
-### 下载单个 ClassIn 视频
+### 可执行文件（.exe）
+
+从 [Releases](https://github.com/JiangGua/classin-downloader/releases/latest) 中下载打包好的 exe 文件，双击运行，耐心等待屏幕提示显示后按照提示操作。其中，「ClassIn 在线研讨室 - 全部显示」页面的源代码的获取方式如下：
+
+![ClassIn 在线研讨室](assets/all-classin-links.png)
+
+然后在空白处右键，「查看网页源代码」，在新弹出的页面按 <kbd>Ctrl</kbd>+<kbd>A</kbd> 全选， <kbd>Ctrl</kbd>+<kbd>C</kbd> 复制，再粘贴到弹出的文本编辑器中保存即可。
+
+
+
+### Python 脚本
+
+#### 下载单个 ClassIn 视频
 
 ```shell
 python main.py classin "https://www.eeo.cn/live.php?lessonKey=5f--------f1"
 python main.py classin "5f--------f1"
 ```
 
-
-
-### 批量下载 Blackboard 网页/txt 文件 里的 ClassIn 视频
+#### 批量下载 Blackboard 网页/txt 文件 里的 ClassIn 视频
 
 先去自己的 `Blackboard - ClassIn 在线研讨室 - 获取历史回放列表 - 全部显示` ，然后 <kbd>Ctrl</kbd>+<kbd>S</kbd> 保存 `网页，仅HTML`。
 
 下面命令里的 `bb.html` 可替换为到 HTML 文件的绝对路径。
 
 ```shell
-python main.py bb bb.html
-python main.py txt bb.txt
+python src/cli.py txt bb.txt
 ```
 
