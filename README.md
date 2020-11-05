@@ -35,3 +35,19 @@ python main.py classin "5f--------f1"
 python src/cli.py txt bb.txt
 ```
 
+
+
+## 参考
+
+下载：
+
+- [高级用法: 流式请求 - Requests 中文文档](https://requests.readthedocs.io/zh_CN/latest/user/advanced.html#streaming-requests)
+- [使用 requests 库实现多线程下载 - cnblogs](https://www.cnblogs.com/weiyinfu/p/8126063.html)
+
+打包：
+
+- [用 PyInstaller 打包一个 exe 程序 - CSDN](https://blog.csdn.net/huilan_same/article/details/54377919)
+
+图标：
+
+- [Gauger.io - 从 Font Awesome 生成图标](https://gauger.io/fonticon/)
