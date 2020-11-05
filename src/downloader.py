@@ -82,7 +82,8 @@ def multithread_download(url, path, debug=False):
             thread.join()
 
     start_threading()
+    shutil.rmtree(TEMP_FOLDER)
 
 if __name__ == "__main__":
     multithread_download('https://csdnimg.cn/public/common/toolbar/images/csdnqr@2x.png', '下载/a.png', debug=True)
-    shutil.rmtree(TEMP_FOLDER)
+    # shutil.rmtree(TEMP_FOLDER)
