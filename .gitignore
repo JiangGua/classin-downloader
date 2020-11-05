@@ -131,3 +131,5 @@ dmypy.json
 .vscode/
 *.html
 *.ico
+download_cache/
+temp.txt

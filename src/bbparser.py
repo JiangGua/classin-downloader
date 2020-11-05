@@ -6,6 +6,8 @@ import time
 
 import requests
 
+import downloader
+
 # 爬虫请求头
 headers = {
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -112,15 +114,20 @@ def get_classin_video(lessonkey):
     
     vlist = c.videolist()
     for i, v in enumerate(vlist):
-        r = requests.get(v, stream=True)
+        # r = requests.get(v, stream=True)
         vfile = os.path.join(path, '{}.mp4'.format(i))
-        f = open(vfile, "wb")
+        print('正在下载:', c.md())
         try:
-            for chunk in r.iter_content(chunk_size=512):
-                if chunk:
-                    f.write(chunk)
+            downloader.multithread_download(v, vfile)
         except Exception as e:
             print(vfile, '下载失败\n链接: ', v, '\n错误: ', e)
+        # f = open(vfile, "wb")
+        # try:
+        #     for chunk in r.iter_content(chunk_size=512):
+        #         if chunk:
+        #             f.write(chunk)
+        # except Exception as e:
+        #     print(vfile, '下载失败\n链接: ', v, '\n错误: ', e)
 
 def get_bb_videos(html_path):
     with open(html_path, 'r', encoding='utf-8') as f:
