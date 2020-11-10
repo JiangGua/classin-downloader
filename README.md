@@ -10,7 +10,7 @@
 
 从 [Releases](https://github.com/JiangGua/classin-downloader/releases/latest) 中下载打包好的 exe 文件，双击运行，耐心等待屏幕提示显示后按照提示操作。其中，「ClassIn 在线研讨室 - 全部显示」页面的源代码的获取方式如下：
 
-![ClassIn 在线研讨室](assets/all-classin-links.png)
+![ClassIn 在线研讨室](https://cdn.jsdelivr.net/gh/JiangGua/classin-downloader/assets/all-classin-links.png)
 
 然后在空白处右键，「查看网页源代码」，在新弹出的页面按 <kbd>Ctrl</kbd>+<kbd>A</kbd> 全选， <kbd>Ctrl</kbd>+<kbd>C</kbd> 复制，再粘贴到弹出的文本编辑器中保存即可。
 
